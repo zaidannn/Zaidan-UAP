@@ -12,9 +12,9 @@ def add_bg_from_local(image_file):
         <style>
         .stApp {{
             background-image: url("data:image/png;base64,{image_file}");
-            background-size: cover;  /* Membuat gambar menutupi seluruh area */
-            background-position: center;  /* Memastikan gambar selalu di pusat */
-            background-repeat: no-repeat;  /* Tidak mengulang gambar */
+            background-size: 100%;  /* Sesuaikan ukuran gambar dengan lebar layar */
+            background-position: center center;  /* Posisikan gambar di tengah */
+            background-repeat: no-repeat;  /* Gambar tidak akan terulang */
             background-attachment: fixed;  /* Agar gambar tetap saat scroll */
         }}
 
