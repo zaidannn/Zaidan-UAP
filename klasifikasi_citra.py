@@ -1,10 +1,7 @@
 import numpy as np
 import tensorflow as tf
+from pathlib import Path
 import streamlit as st
-import requests
-from PIL import Image
-from io import BytesIO
-from base64 import b64encode
 
 # CSS untuk menambahkan background image
 def add_bg_from_local(image_file):
@@ -22,21 +19,14 @@ def add_bg_from_local(image_file):
     )
 
 # Fungsi untuk mengonversi gambar menjadi base64
+from base64 import b64encode
 def get_image_as_base64(image_path):
     with open(image_path, "rb") as file:
         return b64encode(file.read()).decode()
 
-# Fungsi untuk mengunduh gambar dari URL dan mengubahnya menjadi base64
-def get_image_as_base64_from_url(image_url):
-    response = requests.get(image_url)
-    if response.status_code == 200:
-        return b64encode(response.content).decode()
-    else:
-        raise FileNotFoundError(f"Unable to fetch image from {image_url}")
-
-# URL gambar background (gambar di GitHub)
-bg_image_url = "https://raw.githubusercontent.com/zaidannn/Zaidan-UAP/main/Images/download%20(6).jpg"
-bg_image_base64 = get_image_as_base64_from_url(bg_image_url)
+# Tambahkan background
+bg_image_path = "src\Images\download (6).jpg"  # Ganti dengan path ke gambar background Anda
+bg_image_base64 = get_image_as_base64(bg_image_path)
 add_bg_from_local(bg_image_base64)
 
 # Judul aplikasi
@@ -48,26 +38,17 @@ def predict(uploaded_image):
     class_names = ["Bean", "Bitter_Gourd", "Bottle_Gourd", "Brinjal", "Broccoli", "Cabbage", "Capsicum", "Carrot",
                    "Cauliflower", "Cucumber", "Papaya", "Potato", "Pumpkin", "Radish", "Tomato"]
 
-    # Muat gambar menggunakan PIL (dari file atau BytesIO)
-    img = Image.open(uploaded_image)
-    img = img.resize((224, 224))  # Pastikan ukuran sesuai dengan model
+    # Muat dan preprocess citra
+    img = tf.keras.utils.load_img(uploaded_image, target_size=(224, 224))  # Pastikan ukuran sesuai dengan model
+    img = tf.keras.utils.img_to_array(img) / 255.0  # Normalisasi
+    img = np.expand_dims(img, axis=0)  # Tambahkan dimensi batch
 
-    # Konversi gambar ke array dan normalisasi
-    img_array = np.array(img) / 255.0  # Normalisasi
-    img_array = np.expand_dims(img_array, axis=0)  # Tambahkan dimensi batch
-
-    # Unduh model dari GitHub
-    model_url = "https://github.com/zaidannn/Zaidan-UAP/raw/main/Model/Image/vegetable_classifier.h5"
-    response = requests.get(model_url)
-    
-    # Cek jika permintaan sukses
-    if response.status_code == 200:
-        model = tf.keras.models.load_model(BytesIO(response.content))
-    else:
-        raise FileNotFoundError(f"Model tidak dapat ditemukan di {model_url}")
+    # Muat model
+    model_path = Path(__file__).parent / "Model/Image/vegetable_classifier.h5"
+    model = tf.keras.models.load_model(model_path)
 
     # Prediksi
-    output = model.predict(img_array)
+    output = model.predict(img)
     score = tf.nn.softmax(output[0])  # Hitung probabilitas
     return class_names[np.argmax(score)], 100 * np.max(score)  # Prediksi label dan confidence
 
