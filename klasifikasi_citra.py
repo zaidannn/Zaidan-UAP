@@ -102,7 +102,7 @@ add_bg_from_local(bg_image_base64)
 # Judul aplikasi
 st.title("Klasifikasi Citra Sayuran")
 
-# Fungsi prediksi
+# Fungsi prediksi untuk kedua model
 def predict(uploaded_image):
     # Daftar kelas
     class_names = ["Bean", "Bitter_Gourd", "Bottle_Gourd", "Brinjal", "Broccoli", "Cabbage", "Capsicum", "Carrot",
@@ -113,14 +113,26 @@ def predict(uploaded_image):
     img = tf.keras.utils.img_to_array(img) / 255.0  # Normalisasi
     img = np.expand_dims(img, axis=0)  # Tambahkan dimensi batch
 
-    # Muat model
-    model_path = Path(__file__).parent / "Model/Image/vegetable_classifier.h5"
-    model = tf.keras.models.load_model(model_path)
+    # Muat kedua model
+    model_mobilenetv2_path = Path(__file__).parent / "Model/Image/vegetable_classifier.h5"
+    model_inceptionv3_path = Path(__file__).parent / "Model/Image/vegetable_classifier_inception.h5"
+    
+    model_mobilenetv2 = tf.keras.models.load_model(model_mobilenetv2_path)
+    model_inceptionv3 = tf.keras.models.load_model(model_inceptionv3_path)
 
-    # Prediksi
-    output = model.predict(img)
-    score = tf.nn.softmax(output[0])  # Hitung probabilitas
-    return class_names[np.argmax(score)], 100 * np.max(score)  # Prediksi label dan confidence
+    # Prediksi menggunakan model MobileNetV2
+    output_mobilenetv2 = model_mobilenetv2.predict(img)
+    score_mobilenetv2 = tf.nn.softmax(output_mobilenetv2[0])  # Hitung probabilitas
+    label_mobilenetv2 = class_names[np.argmax(score_mobilenetv2)]
+    confidence_mobilenetv2 = 100 * np.max(score_mobilenetv2)
+
+    # Prediksi menggunakan model InceptionV3
+    output_inceptionv3 = model_inceptionv3.predict(img)
+    score_inceptionv3 = tf.nn.softmax(output_inceptionv3[0])  # Hitung probabilitas
+    label_inceptionv3 = class_names[np.argmax(score_inceptionv3)]
+    confidence_inceptionv3 = 100 * np.max(score_inceptionv3)
+
+    return (label_mobilenetv2, confidence_mobilenetv2), (label_inceptionv3, confidence_inceptionv3)
 
 # Komponen file uploader untuk banyak file
 uploads = st.file_uploader("Unggah citra untuk mendapatkan hasil prediksi", type=["png", "jpg"], accept_multiple_files=True)
@@ -141,8 +153,12 @@ if st.button("Predict", type="primary"):
             with st.spinner(f"Memproses citra {upload.name} untuk prediksi..."):
                 # Panggil fungsi prediksi
                 try:
-                    label, confidence = predict(upload)
-                    st.write(f"**{upload.name}** - Label: **{label}**, Confidence: **{confidence:.5f}%**")
+                    # Panggil fungsi prediksi untuk kedua model
+                    (label_mobilenetv2, confidence_mobilenetv2), (label_inceptionv3, confidence_inceptionv3) = predict(upload)
+                    
+                    # Tampilkan hasil prediksi untuk kedua model
+                    st.write(f"**{upload.name}** - Model MobileNetV2: **{label_mobilenetv2}**, Confidence: **{confidence_mobilenetv2:.5f}%**")
+                    st.write(f"**{upload.name}** - Model InceptionV3: **{label_inceptionv3}**, Confidence: **{confidence_inceptionv3:.5f}%**")
                 except Exception as e:
                     st.error(f"Terjadi kesalahan saat memproses {upload.name}: {e}")
             st.markdown('</div>', unsafe_allow_html=True)  # Tutup div result-item
