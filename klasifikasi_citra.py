@@ -1,9 +1,9 @@
 import numpy as np
 import tensorflow as tf
-from pathlib import Path
 import streamlit as st
 import requests
 from base64 import b64encode
+from io import BytesIO
 
 # CSS untuk menambahkan background image
 def add_bg_from_local(image_file):
@@ -52,9 +52,15 @@ def predict(uploaded_image):
     img = tf.keras.utils.img_to_array(img) / 255.0  # Normalisasi
     img = np.expand_dims(img, axis=0)  # Tambahkan dimensi batch
 
-    # Path model (pastikan model ada di repositori atau menggunakan URL)
-    model_path = Path(__file__).parent / "Image/vegetable_classifier.h5"
-    model = tf.keras.models.load_model(model_path)
+    # Unduh model dari GitHub
+    model_url = "https://github.com/zaidannn/Zaidan-UAP/raw/main/Model/Image/vegetable_classifier.h5"
+    response = requests.get(model_url)
+    
+    # Cek jika permintaan sukses
+    if response.status_code == 200:
+        model = tf.keras.models.load_model(BytesIO(response.content))
+    else:
+        raise FileNotFoundError(f"Model tidak dapat ditemukan di {model_url}")
 
     # Prediksi
     output = model.predict(img)
