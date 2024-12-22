@@ -68,7 +68,7 @@ def get_image_as_base64_from_url(image_url):
         raise FileNotFoundError(f"Unable to fetch image from {image_url}")
 
 # URL gambar background (gambar di GitHub)
-bg_image_url = "https://raw.githubusercontent.com/zaidannn/Zaidan-UAP/main/Images/download%20(9).jpg"
+bg_image_url = "https://raw.githubusercontent.com/zaidannn/Zaidan-UAP/main/Images/download%20(10).jpg"
 bg_image_base64 = get_image_as_base64_from_url(bg_image_url)
 add_bg_from_local(bg_image_base64)
 
