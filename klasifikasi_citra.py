@@ -25,7 +25,7 @@ def get_image_as_base64(image_path):
         return b64encode(file.read()).decode()
 
 # Tambahkan background
-bg_image_path = "src\Images\download (6).jpg"  # Ganti dengan path ke gambar background Anda
+bg_image_path = "Images\download (6).jpg"  # Ganti dengan path ke gambar background Anda
 bg_image_base64 = get_image_as_base64(bg_image_path)
 add_bg_from_local(bg_image_base64)
 
