@@ -17,6 +17,43 @@ def add_bg_from_local(image_file):
             background-repeat: no-repeat;  /* Tidak mengulang gambar */
             background-attachment: fixed;  /* Agar gambar tetap saat scroll */
         }}
+
+        /* Gaya untuk header dan tombol */
+        h1 {{
+            font-size: 2.5em;
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 30px;
+        }}
+
+        .stButton {{
+            background-color: #4CAF50;  /* Hijau untuk tombol */
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            width: 200px;
+            margin: 20px auto;
+            display: block;
+        }}
+
+        .stButton:hover {{
+            background-color: #45a049;
+        }}
+
+        .stFileUploader {{
+            display: block;
+            margin: 0 auto;
+            width: 80%;
+        }}
+
+        .stImage {{
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }}
         </style>
         """,
         unsafe_allow_html=True
@@ -34,7 +71,6 @@ def get_image_as_base64_from_url(image_url):
 bg_image_url = "https://raw.githubusercontent.com/zaidannn/Zaidan-UAP/main/Images/images%20(1).jpg"
 bg_image_base64 = get_image_as_base64_from_url(bg_image_url)
 add_bg_from_local(bg_image_base64)
-
 
 # Judul aplikasi
 st.title("Klasifikasi Citra Sayuran")
@@ -69,7 +105,7 @@ if st.button("Predict", type="primary"):
 
         for upload in uploads:
             # Tampilkan setiap citra yang diunggah
-            st.image(upload, caption=f"Citra yang diunggah: {upload.name}", use_column_width=True)
+            st.image(upload, caption=f"Citra yang diunggah: {upload.name}", use_column_width=True, channels="RGB")
 
             with st.spinner(f"Memproses citra {upload.name} untuk prediksi..."):
                 # Panggil fungsi prediksi
