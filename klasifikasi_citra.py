@@ -5,36 +5,37 @@ import streamlit as st
 import requests
 from base64 import b64encode
 
-# CSS untuk menambahkan background image
+# CSS untuk menambahkan background image dan tata letak
 def add_bg_from_local(image_file):
     st.markdown(
         f"""
         <style>
         .stApp {{
             background-image: url("data:image/png;base64,{image_file}");
-            background-size: 100%;  /* Sesuaikan ukuran gambar dengan lebar layar */
-            background-position: center center;  /* Posisikan gambar di tengah */
+            background-size: cover;  /* Menyesuaikan gambar dengan ukuran layar */
+            background-position: center center;  /* Menempatkan gambar di tengah */
             background-repeat: no-repeat;  /* Gambar tidak akan terulang */
             background-attachment: fixed;  /* Agar gambar tetap saat scroll */
         }}
 
-        /* Gaya untuk header dan tombol */
+        /* Gaya untuk judul aplikasi */
         h1 {{
-            font-size: 2.5em;
-            color: #ffffff;
+            font-size: 3em;
+            color: #FF5733;  /* Mengganti warna judul menjadi oranye */
             text-align: center;
             font-weight: bold;
-            margin-top: 30px;
+            margin-top: 50px;
         }}
 
+        /* Gaya untuk tombol */
         .stButton {{
             background-color: #4CAF50;  /* Hijau untuk tombol */
             color: white;
             font-size: 18px;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 10px;
             border: none;
-            width: 200px;
+            width: 250px;
             margin: 20px auto;
             display: block;
         }}
@@ -43,16 +44,42 @@ def add_bg_from_local(image_file):
             background-color: #45a049;
         }}
 
+        /* Gaya untuk uploader file */
         .stFileUploader {{
             display: block;
             margin: 0 auto;
             width: 80%;
         }}
 
+        /* Gaya untuk gambar yang diunggah */
         .stImage {{
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+        }}
+
+        /* Gaya untuk hasil prediksi */
+        .result-container {{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }}
+
+        .result-item {{
+            flex: 1 1 calc(33.33% - 20px);
+            box-sizing: border-box;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+            text-align: center;
+        }}
+
+        /* Gaya untuk teks hasil prediksi */
+        .result-item p {{
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
         }}
         </style>
         """,
@@ -103,8 +130,12 @@ if st.button("Predict", type="primary"):
     if uploads:
         st.subheader("Hasil prediksi:")
 
+        # Membuat container untuk hasil prediksi dengan tata letak yang lebih rapi
+        st.markdown('<div class="result-container">', unsafe_allow_html=True)
+
         for upload in uploads:
-            # Tampilkan setiap citra yang diunggah
+            # Tampilkan setiap citra yang diunggah dalam tampilan rapi
+            st.markdown('<div class="result-item">', unsafe_allow_html=True)
             st.image(upload, caption=f"Citra yang diunggah: {upload.name}", use_column_width=True, channels="RGB")
 
             with st.spinner(f"Memproses citra {upload.name} untuk prediksi..."):
@@ -114,5 +145,8 @@ if st.button("Predict", type="primary"):
                     st.write(f"**{upload.name}** - Label: **{label}**, Confidence: **{confidence:.5f}%**")
                 except Exception as e:
                     st.error(f"Terjadi kesalahan saat memproses {upload.name}: {e}")
+            st.markdown('</div>', unsafe_allow_html=True)  # Tutup div result-item
+
+        st.markdown('</div>', unsafe_allow_html=True)  # Tutup div result-container
     else:
         st.error("Unggah setidaknya satu citra terlebih dahulu!")
