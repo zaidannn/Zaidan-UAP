@@ -53,7 +53,7 @@ def predict(uploaded_image):
     img = np.expand_dims(img, axis=0)  # Tambahkan dimensi batch
 
     # Path model (pastikan model ada di repositori atau menggunakan URL)
-    model_path = Path(__file__).parent / "Model/Image/vegetable_classifier.h5"
+    model_path = Path(__file__).parent / "Image/vegetable_classifier.h5"
     model = tf.keras.models.load_model(model_path)
 
     # Prediksi
