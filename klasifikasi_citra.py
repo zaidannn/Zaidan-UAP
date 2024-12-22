@@ -2,6 +2,8 @@ import numpy as np
 import tensorflow as tf
 from pathlib import Path
 import streamlit as st
+import requests
+from base64 import b64encode
 
 # CSS untuk menambahkan background image
 def add_bg_from_local(image_file):
@@ -18,16 +20,19 @@ def add_bg_from_local(image_file):
         unsafe_allow_html=True
     )
 
-# Fungsi untuk mengonversi gambar menjadi base64
-from base64 import b64encode
-def get_image_as_base64(image_path):
-    with open(image_path, "rb") as file:
-        return b64encode(file.read()).decode()
+# Fungsi untuk mengunduh gambar dari URL dan mengubahnya menjadi base64
+def get_image_as_base64_from_url(image_url):
+    response = requests.get(image_url)
+    if response.status_code == 200:
+        return b64encode(response.content).decode()
+    else:
+        raise FileNotFoundError(f"Unable to fetch image from {image_url}")
 
-# Tambahkan background
-bg_image_path = "Images\download (6).jpg"  # Ganti dengan path ke gambar background Anda
-bg_image_base64 = get_image_as_base64(bg_image_path)
+# URL gambar background (gambar di GitHub)
+bg_image_url = "https://raw.githubusercontent.com/zaidannn/Zaidan-UAP/main/Images/download%20(6).jpg"
+bg_image_base64 = get_image_as_base64_from_url(bg_image_url)
 add_bg_from_local(bg_image_base64)
+
 
 # Judul aplikasi
 st.title("Klasifikasi Citra Sayuran")
