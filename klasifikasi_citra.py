@@ -19,13 +19,13 @@ def add_bg_from_local(image_file):
         }}
 
         /* Gaya untuk judul aplikasi */
-        h1 {{
-            font-size: 3em;
-            color: #FF5733;  /* Mengganti warna judul menjadi oranye */
-            text-align: center;
-            font-weight: bold;
-            margin-top: 50px;
-        }}
+       h1 {
+        font-size: 3em;
+        color: #1E90FF; /* Biru tua */
+        text-align: center;
+        font-weight: bold;
+        margin-top: 50px;
+    }
 
         /* Gaya untuk tombol */
         .stButton {{
