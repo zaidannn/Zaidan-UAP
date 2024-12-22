@@ -2,8 +2,9 @@ import numpy as np
 import tensorflow as tf
 import streamlit as st
 import requests
-from base64 import b64encode
+from PIL import Image
 from io import BytesIO
+from base64 import b64encode
 
 # CSS untuk menambahkan background image
 def add_bg_from_local(image_file):
@@ -47,10 +48,13 @@ def predict(uploaded_image):
     class_names = ["Bean", "Bitter_Gourd", "Bottle_Gourd", "Brinjal", "Broccoli", "Cabbage", "Capsicum", "Carrot",
                    "Cauliflower", "Cucumber", "Papaya", "Potato", "Pumpkin", "Radish", "Tomato"]
 
-    # Muat dan preprocess citra
-    img = tf.keras.utils.load_img(uploaded_image, target_size=(224, 224))  # Pastikan ukuran sesuai dengan model
-    img = tf.keras.utils.img_to_array(img) / 255.0  # Normalisasi
-    img = np.expand_dims(img, axis=0)  # Tambahkan dimensi batch
+    # Muat gambar menggunakan PIL (dari file atau BytesIO)
+    img = Image.open(uploaded_image)
+    img = img.resize((224, 224))  # Pastikan ukuran sesuai dengan model
+
+    # Konversi gambar ke array dan normalisasi
+    img_array = np.array(img) / 255.0  # Normalisasi
+    img_array = np.expand_dims(img_array, axis=0)  # Tambahkan dimensi batch
 
     # Unduh model dari GitHub
     model_url = "https://github.com/zaidannn/Zaidan-UAP/raw/main/Model/Image/vegetable_classifier.h5"
@@ -63,7 +67,7 @@ def predict(uploaded_image):
         raise FileNotFoundError(f"Model tidak dapat ditemukan di {model_url}")
 
     # Prediksi
-    output = model.predict(img)
+    output = model.predict(img_array)
     score = tf.nn.softmax(output[0])  # Hitung probabilitas
     return class_names[np.argmax(score)], 100 * np.max(score)  # Prediksi label dan confidence
 
