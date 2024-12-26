@@ -11,3 +11,7 @@ Link Dataset yang digunakan : " https://www.kaggle.com/datasets/misrakahmed/vege
 
 Model yang digunakan : MobileNetV2 dan InceptionV3 dengan Architecture Model seperti gambar berikut.
 
+### MobileNetV2 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/zaidannn/Zaidan-UAP/main/Images/Mobilenetv2.jpg" alt="MobileNetV2 Architecture" width="600"/>
+</p>
