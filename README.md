@@ -12,11 +12,17 @@ Link Dataset yang digunakan : " https://www.kaggle.com/datasets/misrakahmed/vege
 Model yang digunakan : MobileNetV2 dan InceptionV3 dengan Architecture Model seperti gambar berikut.
 
 ### MobileNetV2 
+
+MobileNetV2 adalah arsitektur deep learning yang dirancang untuk efisiensi tinggi dengan menggunakan **depthwise separable convolution**, yang memisahkan proses convolusi berdasarkan channel dan mengurangi jumlah parameter secara signifikan. Model ini memperkenalkan **bottleneck residual blocks** dengan **inverted residuals** dan **linear bottlenecks** untuk mempertahankan informasi penting sambil tetap efisien. Setiap blok dimulai dengan ekspansi channel untuk menangkap lebih banyak fitur, diikuti dengan kompresi untuk menjaga efisiensi. Dengan lapisan pooling global dan dense di akhir, MobileNetV2 sangat cocok untuk aplikasi klasifikasi gambar pada perangkat dengan sumber daya terbatas, seperti smartphone dan IoT.
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/zaidannn/Zaidan-UAP/main/Images/Mobilenetv2.jpg" alt="MobileNetV2 Architecture" width="600"/>
 </p>
 
 ### InceptionV3 
+
+InceptionV3 adalah arsitektur deep learning yang dirancang untuk efisiensi dan akurasi tinggi dalam klasifikasi gambar. Model ini merupakan pengembangan dari versi sebelumnya, dengan memperkenalkan beberapa inovasi seperti **factorized convolutions**, yang memecah convolusi besar menjadi convolusi yang lebih kecil untuk mengurangi jumlah parameter. InceptionV3 juga menggunakan teknik **batch normalization** untuk mempercepat konvergensi dan **auxiliary classifiers** sebagai regularisasi tambahan. Struktur model ini menggabungkan berbagai ukuran kernel dalam satu layer untuk menangkap informasi dari berbagai skala. Dengan desain modular yang efisien, InceptionV3 sangat cocok untuk berbagai aplikasi pengenalan gambar, termasuk yang membutuhkan performa tinggi dengan kompleksitas komputasi yang optimal.
+
 <p align="center">
   <img src="https://github.com/zaidannn/Zaidan-UAP/blob/main/Images/Inceptionv3.jpg" alt="MobileNetV2 Architecture" width="600"/>
 </p>
