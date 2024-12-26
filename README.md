@@ -15,3 +15,8 @@ Model yang digunakan : MobileNetV2 dan InceptionV3 dengan Architecture Model sep
 <p align="center">
   <img src="https://raw.githubusercontent.com/zaidannn/Zaidan-UAP/main/Images/Mobilenetv2.jpg" alt="MobileNetV2 Architecture" width="600"/>
 </p>
+
+### MobileNetV2 
+<p align="center">
+  <img src="https://github.com/zaidannn/Zaidan-UAP/blob/main/Images/Inceptionv3.jpg" alt="MobileNetV2 Architecture" width="600"/>
+</p>
