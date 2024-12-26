@@ -62,4 +62,6 @@ Dataset terdiri atas 21000 gambar sayuran yang terbagi menjadi 15 kelas. Data te
   <img src="https://github.com/zaidannn/Zaidan-UAP/blob/main/Images/tampilanapp2.jpg" alt="MobileNetV2 Architecture" width="600"/>
 </p>
 
+Link : https://zaidan-uap-jqdrdnw4efyuvjf6wfigyk.streamlit.app/
+
 - Author @Zaidannn
