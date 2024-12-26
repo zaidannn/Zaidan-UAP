@@ -26,3 +26,13 @@ Dataset terdiri atas 21000 gambar sayuran yang terbagi menjadi 15 kelas. Data te
 
 ## Model Evaluation
 ### MobileNetV2
+
+<p align="center">
+  <img src="https://github.com/zaidannn/Zaidan-UAP/blob/main/Images/learning%20curve%20mobilnetv2.png" alt="MobileNetV2 Architecture" width="600"/>
+</p>
+
+### InceptionV3
+
+<p align="center">
+  <img src="https://github.com/zaidannn/Zaidan-UAP/blob/main/Images/learning%20curve%20mobilnetv2.png" alt="MobileNetV2 Architecture" width="600"/>
+</p>
