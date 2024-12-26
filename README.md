@@ -16,7 +16,13 @@ Model yang digunakan : MobileNetV2 dan InceptionV3 dengan Architecture Model sep
   <img src="https://raw.githubusercontent.com/zaidannn/Zaidan-UAP/main/Images/Mobilenetv2.jpg" alt="MobileNetV2 Architecture" width="600"/>
 </p>
 
-### MobileNetV2 
+### InceptionV3 
 <p align="center">
   <img src="https://github.com/zaidannn/Zaidan-UAP/blob/main/Images/Inceptionv3.jpg" alt="MobileNetV2 Architecture" width="600"/>
 </p>
+
+## Overview Dataset
+Dataset terdiri atas 21000 gambar sayuran yang terbagi menjadi 15 kelas. Data terbagi menjadi 3 folder yaitu data train dengan 15000 gambar, data validation dengan 3000 gambar, dan data test dengan 3000 gambar.
+
+## Model Evaluation
+### MobileNetV2
